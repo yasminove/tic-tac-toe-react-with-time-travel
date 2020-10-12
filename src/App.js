@@ -57,7 +57,7 @@ class App extends React.Component {
 
   handleClick(i){
     // console.log(i, 'i');
-    const history = this.state.history;
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     // console.log(current, 'current');
     const squares = current.squares.slice();
@@ -90,9 +90,8 @@ class App extends React.Component {
       })
   }
     render() {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares;
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
     const moves = history.map((step, move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       return (
@@ -102,7 +101,7 @@ class App extends React.Component {
       )
     })
     let status;
-    const winner = calculateWinner(squares);
+    const winner = calculateWinner(current.squares);
     // console.log(winner, 'winner');
     if(winner){
       status = 'Winner is ' + winner
